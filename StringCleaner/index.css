@@ -1,0 +1,39 @@
+﻿#cleanButton {
+    background-color: #00b4d8;
+    border: 1px solid #00b4d8;
+    border-radius: 6px;
+    color: white;
+    cursor: pointer;
+    font-size: 14px;
+    padding: 6px 16px;
+    text-align: center;
+}
+
+    #cleanButton:hover {
+        background-color: #0077b6;
+    }
+
+    #cleanButton:active {
+        background-color: #3077b6;
+    }
+
+#inputText {
+    border: 2px solid #00b4d8;
+    border-radius: 3px;
+    cursor: pointer;
+    font-size: 12px;
+    padding: 6px;
+}
+
+    #inputText:focus {
+        border-color: #0077b6;
+        outline: none;
+    }
+
+#output {
+    padding-left: 40px;
+}
+.text {
+    color: #0077b6;
+    font-size: 16px;
+}
