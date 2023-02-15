@@ -7,54 +7,6 @@ function cleanFile() {
     reader.readAsText(inputFile);
     reader.onload = loadhandler;
 }
-
-function loadhandler(event) {
-    let csv = event.target.result;
-    download_csv_file(csv);
-}
-
-function processData(csv) {
-    console.log(csv);
-}
-
-function arrayStringCleaner(array) {
-    var newArray = [];
-
-    for(let i = 0; i < array.length; i++) {
-        var newRow = [];
-
-        for(let j = 0; j < array[i].length; j++) {
-            newRow.push(stringCleaner(array[i][j]));
-        }
-
-        newArray.push(newRow);
-    }
-
-    return newArray;
-}
-
-function csvToArray (csvFile) {
-    var rows = csvFile.split("\n");
-
-    return rows.map(function (row) {
-    	return row.split(",");
-    });
-};
-
-function stringCleaner(str) {
-    let cleanStr = "";
-
-    for (let i = 0; i < str.length; i++) {
-        let char = str.charAt(i);
-        let ascVal = str.charCodeAt(i);
-
-        if ((ascVal > 31 && ascVal < 127) || (ascVal > 191 && ascVal < 256)) {
-            cleanStr += char;
-        }
-    }
-
-    return cleanStr;
-}
   
 function download_csv_file(csvFileData) {
     //convert to 2d array
@@ -81,4 +33,48 @@ function download_csv_file(csvFileData) {
     hiddenElement.download = 'Output.csv';
 
     hiddenElement.click();
+}
+
+function arrayStringCleaner(array) {
+    var newArray = [];
+
+    for(let i = 0; i < array.length; i++) {
+        var newRow = [];
+
+        for(let j = 0; j < array[i].length; j++) {
+            newRow.push(stringCleaner(array[i][j]));
+        }
+
+        newArray.push(newRow);
+    }
+
+    return newArray;
+}
+
+function csvToArray (csvFile) {
+    var rows = csvFile.split("\n");
+
+    return rows.map(function (row) {
+    	return row.split(",");
+    });
+};
+
+function loadhandler(event) {
+    let csv = event.target.result;
+    download_csv_file(csv);
+}
+
+function stringCleaner(str) {
+    let cleanStr = "";
+
+    for (let i = 0; i < str.length; i++) {
+        let char = str.charAt(i);
+        let ascVal = str.charCodeAt(i);
+
+        if ((ascVal > 31 && ascVal < 127) || (ascVal > 191 && ascVal < 256)) {
+            cleanStr += char;
+        }
+    }
+
+    return cleanStr;
 }
