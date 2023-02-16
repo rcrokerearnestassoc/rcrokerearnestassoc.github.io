@@ -1,40 +1,26 @@
 // JavaScript source code
+var fileName = "";
 
 function cleanFile() {
     var inputFile = document.getElementById("inputFile").files[0];
 
-    let reader =  new FileReader();
-    reader.readAsText(inputFile);
-    reader.onload = loadhandler;
-}
-  
-function download_csv_file(csvFileData) {
-    //convert to 2d array
-    var csvFileArray = csvToArray(csvFileData);
+    fileName = inputFile.name;
+    var fileType = fileName.substring(fileName.length-3);
 
-    //clean the data
-    var cleanFileData = arrayStringCleaner(csvFileArray);
-
-    //define the heading for each row of the data
-    var csv = '';
-    
-    //merge the data with CSV
-    cleanFileData.forEach(function(row) {
-            csv += row.join(',');
-            csv += "\n";
-    });
-
-    document.write(csv);
-   
-    var hiddenElement = document.createElement('a');
-
-    hiddenElement.href = 'data:text/csv;charset=utf-8,' + encodeURI(csv);
-    hiddenElement.target = '_blank';    
-    hiddenElement.download = 'Output.csv';
-
-    hiddenElement.click();
+    if(fileType == "csv") {
+        let reader =  new FileReader();
+        reader.readAsText(inputFile);
+        reader.onload = csvloadhandler;
+    }
+    else if(fileType == "txt") {
+        let reader =  new FileReader();
+        reader.readAsText(inputFile);
+        reader.onload = txtloadhandler;
+    }
 }
 
+
+// CSV FILE FUNCTIONS
 function arrayStringCleaner(array) {
     var newArray = [];
 
@@ -51,6 +37,11 @@ function arrayStringCleaner(array) {
     return newArray;
 }
 
+function csvloadhandler(event) {
+    let csv = event.target.result;
+    download_csv_file(csv);
+}
+
 function csvToArray (csvFile) {
     var rows = csvFile.split("\n");
 
@@ -58,12 +49,66 @@ function csvToArray (csvFile) {
     	return row.split(",");
     });
 };
+  
+function download_csv_file(csvFileData) {
+    //convert to 2d array
+    var csvFileArray = csvToArray(csvFileData);
 
-function loadhandler(event) {
-    let csv = event.target.result;
-    download_csv_file(csv);
+    //clean the data
+    var cleanFileData = arrayStringCleaner(csvFileArray);
+
+    //define the base string
+    var csv = '';
+    
+    //merge the data with CSV
+    cleanFileData.forEach(function(row) {
+            csv += row.join(',');
+            csv += "\n";
+    });
+
+    document.write(csv);
+   
+    var hiddenElement = document.createElement('a');
+
+    hiddenElement.href = 'data:text/csv;charset=utf-8,' + encodeURI(csv);
+    hiddenElement.target = '_blank';    
+    hiddenElement.download = fileName.substring(0,fileName.length-4) + "-Clean.csv";
+
+    hiddenElement.click();
 }
 
+
+//TXT FILE FUNCTIONS
+function txtloadhandler(event) {
+    let txt = event.target.result;
+    download_txt_file(txt);
+}
+  
+function download_txt_file(txtFileData) {
+    //clean the data
+    var cleanFileData = stringCleaner(txtFileData);
+
+    // Write clean data to new doc
+    document.write(cleanFileData);
+   
+    var hiddenElement = document.createElement('a');
+
+    hiddenElement.href = 'data:text/csv;charset=utf-8,' + encodeURI(cleanFileData);
+    hiddenElement.target = '_blank';    
+    hiddenElement.download = fileName.substring(0,fileName.length-4) + "-Clean.txt";
+
+    hiddenElement.click();
+}
+
+
+// TEXT FUNCTIONS
+function cleanText() {
+    var str = document.getElementById("inputText").value;
+    document.getElementById("output").innerHTML = stringCleaner(str);
+}
+
+
+// BASE CLEANER
 function stringCleaner(str) {
     let cleanStr = "";
 
