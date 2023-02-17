@@ -65,8 +65,6 @@ function download_csv_file(csvFileData) {
             csv += row.join(',');
             csv += "\n";
     });
-
-    document.write(csv);
    
     var hiddenElement = document.createElement('a');
 
@@ -88,9 +86,7 @@ function download_txt_file(txtFileData) {
     //clean the data
     var cleanFileData = stringCleaner(txtFileData);
 
-    // Write clean data to new doc
-    document.write(cleanFileData);
-   
+    //Create new element to at as link to download file
     var hiddenElement = document.createElement('a');
 
     hiddenElement.href = 'data:text/csv;charset=utf-8,' + encodeURI(cleanFileData);
