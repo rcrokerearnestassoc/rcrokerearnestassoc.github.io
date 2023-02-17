@@ -65,10 +65,10 @@ function download_csv_file(csvFileData) {
             csv += row.join(',');
             csv += "\n";
     });
-   
+
     var hiddenElement = document.createElement('a');
 
-    hiddenElement.href = 'data:text/csv;charset=utf-8,' + encodeURI(csv);
+    hiddenElement.href = 'data:text/csv;charset=utf-8,' + encodeURIComponent(csv);
     hiddenElement.target = '_blank';    
     hiddenElement.download = fileName.substring(0,fileName.length-4) + "-Clean.csv";
 
@@ -89,7 +89,7 @@ function download_txt_file(txtFileData) {
     //Create new element to at as link to download file
     var hiddenElement = document.createElement('a');
 
-    hiddenElement.href = 'data:text/csv;charset=utf-8,' + encodeURI(cleanFileData);
+    hiddenElement.href = 'data:text/csv;charset=utf-8,' + encodeURIComponent(cleanFileData);
     hiddenElement.target = '_blank';    
     hiddenElement.download = fileName.substring(0,fileName.length-4) + "-Clean.txt";
 
