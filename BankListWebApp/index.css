@@ -1,0 +1,80 @@
+#searchButton {
+    background-color: #00b4d8;
+    border: 1px solid #00b4d8;
+    border-radius: 6px;
+    color: white;
+    cursor: pointer;
+    font-size: 14px;
+    padding: 6px 16px;
+    text-align: center;
+}
+
+    #searchButton:hover {
+        background-color: #0077b6;
+    }
+
+    #searchButton:active {
+        background-color: #3077b6;
+    }
+
+#inputField {
+    border: 2px solid #00b4d8;
+    border-radius: 3px;
+    cursor: pointer;
+    font-size: 12px;
+    padding: 6px;
+}
+
+    #inputField:focus {
+        border-color: #0077b6;
+        outline: none;
+    }
+
+.text {
+    color: #0077b6;
+    font-size: 16px;
+}
+
+.bankGrid {
+  display: grid;
+  grid-template-rows: repeat(auto-fill, minmax(100px, 1fr));
+  gap: 10px;
+  width: 25%;
+}
+
+.bankGrid-title {
+  text-align: center;
+  font-size: 20px;
+  font-weight: bold;
+  margin-bottom: 20px;
+  margin-top: 40px;
+  width: 25%;
+}
+
+.bankGrid-row {
+  display: flex;
+  align-items: center;
+  border: 1px solid #ccc;
+  padding: 5px;
+}
+
+    .bankGrid-row > div {
+        flex: 1;
+        padding: 5px;
+        text-align: center;
+    }
+    
+    .bankGrid-row:nth-child(even) {
+      background-color: #e5f2f7;
+    }
+    
+    .bankGrid-row:nth-child(odd) {
+      background-color: #d6ebf2;
+    }
+
+.bankGrid-header {
+  font-weight: bold;
+  background-color: #0077b6;
+  color: black;
+  font-size: xx-large;
+}

@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <link rel="stylesheet" href="index.css">
+    <script src="index.js"></script>
+</head>
+<body>
+    <p class="text" style="display: inline; padding-left: 5px;">Company Number: </p> 
+    <input type="number" id="inputField">
+    <button id="searchButton" type="button" onclick="search()">Search</button>
+    <h2 class="bankGrid-title">Bank Info</h2>
+  
+    <div class="bankGrid" id="bankGrid">
+      <div class="bankGrid-row bankGrid-header">
+        <div>Name</div>
+        <div>Balance</div>
+      </div>
+    </div>
+
+    <div id="output"></div>
+</body>
+</html>
