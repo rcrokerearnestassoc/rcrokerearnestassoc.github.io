@@ -1,68 +1,25 @@
 // JavaScript source code
 
-var token = "Bearer ";
-
 function search() {
-  var cono = document.getElementById("inputField").value;
+  //var cono = document.getElementById("inputField").value;
+  var cono = 5001;
 
   console.log("selected cono: " + cono);
 
+  setupDivs();
+
   searchForBankInfo(cono);
-  //document.getElementById("output").innerHTML = searchForBankInfo(cono);
-  //fillGrid(cono);
 }
 
-function fillGrid(cono) {
-  const data = {
-    1: {
-      "name": "Wells Fargo",
-      "balance": 10000
-    },
-    2: {
-      "name": "Ameritrade",
-      "balance": 112300
-    },
-    3: {
-      "name": "Bank of America",
-      "balance": 84512
-    },
-    10: {
-      "name": "Ameritrade",
-      "balance": 112300
-    },
-    265: {
-      "name": "Ameritrade",
-      "balance": 112300
-    },
-    21: {
-      "name": "Ameritrade",
-      "balance": 112300
-    },
-    22: {
-      "name": "Ameritrade",
-      "balance": 112300
-    },
-    23: {
-      "name": "Ameritrade",
-      "balance": 112300
-    },
-    212: {
-      "name": "Ameritrade",
-      "balance": 112300
-    },
-    2125: {
-      "name": "Ameritrade",
-      "balance": 112300
-    },
-    2127: {
-      "name": "Ameritrade",
-      "balance": 11512300
-    }
-  };
+function fillGrid(json, cono) {
+  const data = json.ttblcrsb;
 
   var grid = document.getElementById("bankGrid");
+  grid.style.display = "grid";
 
   var title = document.querySelector(".bankGrid-title");
+  title.style.display = "block";
+
   title.textContent = `Bank Info for Company Number ${cono}`;
 
   var header = grid.querySelector(".bankGrid-header");
@@ -77,56 +34,97 @@ function fillGrid(cono) {
       var item = data[key];
       var row = document.createElement("div");
       row.className = "bankGrid-row";
-      var balanceFormated = item.balance.toLocaleString('en-US', { style: 'currency', currency: 'USD' });
+      var balanceFormated = item.curbookbal.toLocaleString('en-US', { style: 'currency', currency: 'USD' });
       var rowText = `
-        <div>${item.name} (${key})</div>
+        <div>${item.name} (${item.bankno})</div>
         <div>${balanceFormated}</div>
       `;
       row.innerHTML = rowText;
       grid.appendChild(row);
     }
   }
+
+  var title = document.querySelector(".loader");
+  title.style.display = "none";
+}
+
+function setupDivs() {
+  var title = document.querySelector(".loader");
+  title.style.display = "block";
+
+  var grid = document.getElementById("bankGrid");
+  grid.style.display = "none";
+
+  var title = document.querySelector(".bankGrid-title");
+  title.style.display = "none";
+
+  var elements = document.getElementsByClassName('bankGrid-row');
+     for (var i = 0; i < elements.length; i++) {
+       elements[i].style.display = "none";
+   }
+
 }
 
 function searchForBankInfo(cono) {
-  // var data = {
-  //   CompanyNumber: cono,
-  //   Operator: "RC01",
-  //   TableName: "crsb",
-  //   WhereClause: "cono = " + cono,
-  //   BatchSize: 0,
-  //   RestartRowID: ""
-  // };
-
-  var myHeaders = new Headers();
-  myHeaders.append("Content-Type", "application/json");
-  myHeaders.append("Authorization", token);
-
-  var data = JSON.stringify({
-    "CompanyNumber": 5001,
-    "Operator": "RC01",
-    "TableName": "crsb",
-    "WhereClause": "cono = 5001",
-    "BatchSize": 0,
-    "RestartRowID": ""
-  });
-
-  var requestOptions = {
-    method: 'POST',
-    headers: myHeaders,
-    body: data,
-    redirect: 'follow'
+  let logindata = {
+    "operator": "RC01",
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    "cono": parseInt(cono)
   };
 
-  var bankInfo = null;
+  let loginrequestOptions = {
+    method: 'POST',
+    body: logindata
+  };
 
-  const apiUrl = 'https://mingle-ionapi.inforcloudsuite.com/EARNEST_DEM/SX/rest/serviceinterface/proxy/FetchWhere';
-  // const corsProxyUrl = 'https://api.allorigins.win/get?url=';
+  let requestdata = {
+    "operator": "RC01",
+    "endpoint": "FetchWhere",
+    "suite": "sxefetch",
+    "method": "Post",
+    "request": {
+      "CompanyNumber": parseInt(cono),
+      "Operator": "RC01",
+      "TableName": "crsb",
+      "WhereClause": `cono = ${cono}`,
+      "BatchSize": 0,
+      "RestartRowID": ""
+    }
+  };
 
-  fetch(apiUrl, requestOptions)
-    .then(response => response.json())
-    .then(result => console.log(result))
-    .catch(error => console.log('error', error));
+  let requestOptions = {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(requestdata)
+  };
+
+  const loginUrl = 'http://localhost:3000/login';
+  const requestUrl = 'http://localhost:3000/request';
+  const lambdaUrl = "https://wtdtxdhht2.execute-api.us-east-1.amazonaws.com/default/FetchWhereTest";
+
+  // fetch(loginUrl, loginrequestOptions)
+  //   .then(response => response.json())
+  //   .then(result => {
+  //     console.log(result);
+
+  //     console.log(requestOptions);
+
+  //     fetch(requestUrl, requestOptions)
+  //       .then(response2 => response2.json())
+  //       .then(result2 => fillGrid(result2, cono))
+  //       .catch(error2 => console.log('error', error2));
+  //   })
+  //   .catch(error => console.log('error', error));  
+
+  fetch(lambdaUrl)
+  .then(response => response.json())
+  .then(result => fillGrid(result, cono))
+  .catch(error => console.log('error', error));
+
 
   // fetch("https://mingle-ionapi.inforcloudsuite.com/EARNEST_DEM/SX/rest/serviceinterface/proxy/FetchWhere", {
   //   method: 'POST',
@@ -171,5 +169,5 @@ function searchForBankInfo(cono) {
   //   bankInfo = null;
   // }
 
-  return "Bank Info from Company Number: " + bankInfo;
+  //return "Bank Info from Company Number: " + bankInfo;
 }

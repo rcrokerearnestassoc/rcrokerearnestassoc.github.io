@@ -74,7 +74,34 @@
 
 .bankGrid-header {
   font-weight: bold;
-  background-color: #0077b6;
+  background-color: #d6ebf2;
   color: black;
   font-size: xx-large;
+  display: flex;
+  align-items: center;
+  border: 1px solid #ccc;
+  padding: 5px;
+}
+
+  .bankGrid-header > div {
+      flex: 1;
+      padding: 5px;
+      text-align: center;
+  }
+
+.loader {
+  border: 6px solid #f3f3f3;
+  border-radius: 50%;
+  border-top: 6px solid #00b4d8;
+  width: 20px;
+  height: 20px;
+  animation: spin 2s linear infinite;
+  /*margin-left: 8.5%;
+  margin-top: 1%;
+  */
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
 }
