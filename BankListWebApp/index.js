@@ -125,7 +125,6 @@ function searchForBankInfo(cono) {
   .then(result => fillGrid(result, cono))
   .catch(error => console.log('error', error));
 
-
   // fetch("https://mingle-ionapi.inforcloudsuite.com/EARNEST_DEM/SX/rest/serviceinterface/proxy/FetchWhere", {
   //   method: 'POST',
   //   headers: {
