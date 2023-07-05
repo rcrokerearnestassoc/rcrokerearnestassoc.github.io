@@ -96,9 +96,6 @@
   width: 20px;
   height: 20px;
   animation: spin 2s linear infinite;
-  /*margin-left: 8.5%;
-  margin-top: 1%;
-  */
 }
 
 @keyframes spin {
